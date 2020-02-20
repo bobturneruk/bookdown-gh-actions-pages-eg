@@ -1,0 +1,21 @@
+name: Render Bookdown as .pdf
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest    
+    container: rocker/verse
+    steps:
+      - name: "Checkout"
+        uses: actions/checkout@v1
+      - name: Build
+        run: Rscript -e "bookdown::render_book('index.Rmd', 'bookdown::pdf_book', output_dir = 'public')"
+      - name: Deploy
+        if: success()
+        uses: crazy-max/ghaction-github-pages@v1
+        with:
+          target_branch: gh-pdf
+          build_dir: public
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
