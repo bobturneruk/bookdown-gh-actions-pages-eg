@@ -1,12 +1,15 @@
-name: Render Bookdown as .pdf
+name: Render Bookdown as .pdf, publish if merging to `master`
 
 on:
-  pull_request:
+  push:
       branches:
         - master
+  pull_request:
+    branches:
+      - master
 
 jobs:
-  build:
+  build_bookdown:
     runs-on: ubuntu-latest    
     container: rocker/verse
     steps:
@@ -15,7 +18,7 @@ jobs:
       - name: Build
         run: Rscript -e "bookdown::render_book('index.Rmd', 'bookdown::pdf_book', output_dir = 'public')"
       - name: Deploy
-        if: success()
+        if: success() && github.event_name == 'push' #only publish pdf on merge with master
         uses: crazy-max/ghaction-github-pages@v1
         with:
           target_branch: gh-pdf
