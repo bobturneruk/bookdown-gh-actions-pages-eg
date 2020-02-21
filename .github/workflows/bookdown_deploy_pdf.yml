@@ -1,7 +1,7 @@
 name: Render Bookdown as .pdf
 
 on:
-  pull_request:
+  push:
       branches:
         - master
 
