@@ -1,4 +1,4 @@
-name: Render Bookdown as .pdf
+name: Render Bookdown as .pdf, publish if merging to `master`
 
 on:
   push:
@@ -9,7 +9,7 @@ on:
       - master
 
 jobs:
-  build:
+  build_bookdown:
     runs-on: ubuntu-latest    
     container: rocker/verse
     steps:
