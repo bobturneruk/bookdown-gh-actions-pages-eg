@@ -23,3 +23,18 @@ knitr::kable(
 ```
 
 You can write citations, too. For example, we are using the **bookdown** package [@R-bookdown] in this sample book, which was built on top of R Markdown and **knitr** [@xie2015].
+
+```{r echo=FALSE}
+library(DiagrammeR)
+library(DiagrammeRsvg)
+library(magrittr)
+library(rsvg)
+```
+
+```{r test-fig, echo=FALSE, fig.cap="Clinic", out.width="100%"}
+grViz("assets/test.gviz") %>% 
+        export_svg %>% 
+        charToRaw %>% 
+        rsvg_png("assets/test.png")
+knitr::include_graphics("assets/test.png")
+```
